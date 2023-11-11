@@ -1,6 +1,6 @@
 # Lernfeld B1F
 
-# Kompetenz
+## Kompetenz
 Ich kann Algorithmen in funktionale Teilstücke aufteilen
 
 

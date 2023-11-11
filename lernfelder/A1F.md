@@ -1,6 +1,6 @@
 # Lernfeld A1F
 
-# Kompetenz
+## Kompetenz
 Ich kann das Konzept von *immutable values* erläutern und dazu Beispiele anwenden. Somit kann ich dieses Konzept funktionaler Programmierung im Unterschied zu anderen Programmiersprachen erklären (z.Bsp. im Vergleich zu referenzierten Objekten)
 
 # Unveränderliche Werte und ihre Rolle verstehen

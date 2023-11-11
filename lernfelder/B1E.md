@@ -1,6 +1,6 @@
 # Lernfeld B1E
 
-# Kompetenz
+## Kompetenz
 Ich kann Funktionen in zusammenhängende Algorithmen implementieren
 
 ## Implementierung von Funktionen in kohärenten Algorithmen

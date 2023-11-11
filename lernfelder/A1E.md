@@ -1,6 +1,6 @@
 # Lernfeld A1E
 
-# Kompetenz
+## Kompetenz
 Ich kann aufzeigen wie Probleme in den verschiedenen Konzepten (OO, prozedural und funktional) gelöst werden und diese miteinander vergleichen.
 
 # Wege zur Lösung von Problemen mit Code erforschen
