@@ -79,6 +79,13 @@ class BuxPayApp:
             self.save_clients()
             time.sleep(3600)
 
+    def get_all_invoices(self):
+        return [client.invoices for client in self.clients]
+
+    def get_unpaid_invoices(self, client):
+        # get client invoices
+        unpaid_invoices = filter(lambda invoice: invoice.status == "unpaid", self.get_all_invoices())
+        return unpaid_invoices
     def get_csrf_token(self, user_cookies):
         """
         Get the CSRF token of the authenticated cookie.
@@ -276,6 +283,27 @@ def higher_order_example():
     squared_numbers = list(map(square, numbers))
     return jsonify({"data": squared_numbers})
 
+@buxpay_blueprint.route('/combined-example', methods=['GET'])
+def combined_example():
+    # Eine Liste von Transaktionen mit Beträgen
+    transactions = [
+        {"user_id": 1, "amount": 100},
+        {"user_id": 2, "amount": 200},
+        {"user_id": 1, "amount": 50},
+        {"user_id": 3, "amount": 300},
+        {"user_id": 2, "amount": 150},
+    ]
+
+    # Zuerst filtern wir die Transaktionen für einen bestimmten Benutzer (z.B., Benutzer 1)
+    filtered_transactions = filter(lambda trans: trans["user_id"] == 1, transactions)
+
+    # Dann extrahieren wir die Beträge aus den gefilterten Transaktionen
+    amounts = map(lambda trans: trans["amount"], filtered_transactions)
+
+    # Schließlich berechnen wir die Gesamtsumme der Beträge
+    total_amount = reduce(lambda x, y: x + y, amounts, 0)
+
+    return jsonify({"total_amount": total_amount})
 
 @buxpay_blueprint.route('/reduce-example', methods=['GET'])
 def reduce_example():

@@ -1,34 +1,38 @@
 # Lernfeld B1G
 
 ## Kompetenz
-Ich kann ein Algorithmus erklären
+Funktionen höherer Ordnung sind Funktionen, die andere Funktionen als Parameter akzeptieren oder Funktionen zurückgeben können. Dies ermöglicht die Komposition von Funktionen und die Verwendung von Funktionsfabriken, was die Code-Wiederverwendbarkeit und -Lesbarkeit erhöht. In Python sind Funktionen höherer Ordnung ein wichtiger Bestandteil der funktionalen Programmierfähigkeiten und werden häufig in Verbindung mit Funktionen wie `map`, `filter` und `reduce` verwendet.
 
-## Algorithmen verstehen
-Ein Algorithmus ist eine Liste von Schritten zur Lösung einer Aufgabe. In Python folgt ein Programm den Schritten eines Algorithmus, um eine Aufgabe zu erledigen. Um zum Beispiel die größte Zahl in einer Liste zu finden, können wir einen Algorithmus verwenden.
+## Anwendung von Funktionen höherer Ordnung in BuxPay
 
-## Codebeispiel
+In meinem BuxPay-Code sind Funktionen höherer Ordnung in verschiedenen Teilen des Codes vorhanden. Hier sind einige Beispiele:
 
-```python
-@buxpay_blueprint.route('/procedural-example', methods=['GET'])
-def procedural_example():
-    result = 0
-    for num in range(1, 11):
-        result += num
+1. **Verwendung von `map` und Funktionen höherer Ordnung:**
 
-    return jsonify({"result": result})
-```
+   ```python
+   def create_invoice(client):
+       # ...
+       invoices = filter(None, map(create_invoice, app.buxpay_app.clients))
+   ```
 
-In meinem BuxPay-Code gibt es mehrere Beispiele für die Anwendung von Algorithmen und Schritten zur Lösung von Aufgaben. Hier ist eine Liste von Fällen, in denen diese Kompetenz in meinem BuxPay-Code vorhanden ist:
+   Hier wird die Funktion `map` verwendet, um die Funktion `create_invoice` auf jede Client-Instanz in `app.buxpay_app.clients` anzuwenden. Dies ist ein Beispiel für die Verwendung einer Funktion höherer Ordnung (`map`), um eine andere Funktion (`create_invoice`) auf eine Liste von Elementen anzuwenden.
 
-1. **Flask-Endpunkte als Algorithmen:**
-   - Die verschiedenen Flask-Endpunkte in meinem BuxPay-Code sind Algorithmen, die Schritte zur Lösung bestimmter Aufgaben definieren. Zum Beispiel der Endpunkt `payments_create`, der Schritte zur Erstellung von Zahlungsinformationen definiert.
+2. **Filtern mit einer Funktion höherer Ordnung:**
 
-2. **Verwendung von Funktionen als Schritten in Algorithmen:**
-   - In meiner Klasse `BuxPayApp` werden Funktionen wie `load_json`, `save_json`, `load_clients`, `save_clients`, `load_invoices`, `save_invoices`, `cleanup_paid_transactions`, `get_csrf_token` und `create_gamepass` verwendet, um bestimmte Schritte in den Algorithmen auszuführen.
+   ```python
+   invoices = filter(None, map(create_invoice, app.buxpay_app.clients))
+   ```
 
-3. **Anwendung von funktionalem Programmieren:**
-   - Die Endpunkte `lambda-example`, `higher-order-example`, `reduce-example`, `filter-example` und `functional-example` demonstrieren die Anwendung von Algorithmen und Schritten unter Verwendung funktionaler Programmierkonzepte, um Aufgaben wie Mapping, Filtern und Reduzieren von Daten durchzuführen.
+   Die `filter`-Funktion wird verwendet, um ungültige Rechnungen aus der Liste `invoices` zu filtern. Hier wird die Funktion `None` als Filterfunktion verwendet, um ungültige Rechnungen zu entfernen. Dies ist ein weiteres Beispiel für die Verwendung einer Funktion höherer Ordnung (`filter`), um die Daten zu transformieren.
 
-4. **Prozedurale Programmierung:**
-   - Der Endpunkt `procedural-example` zeigt einen prozeduralen Algorithmus, der die Summe von Zahlen von 1 bis 10 berechnet. Dies ist ein Beispiel für die Anwendung von Schritten zur Lösung einer Aufgabe in einer prozeduralen Programmierweise.
+3. **Verwendung von Funktionen als Argumente:**
 
+   ```python
+   def cleanup_paid_transactions(self):
+       # ...
+       client.remove_expired_invoices(current_time)
+   ```
+
+   In der Methode `cleanup_paid_transactions` wird die Funktion `remove_expired_invoices` auf jede Client-Instanz angewendet. Hier wird eine Funktion (`remove_expired_invoices`) als Argument an eine andere Funktion übergeben.
+
+Die Verwendung von Funktionen höherer Ordnung in meinem BuxPay-Code erhöht die Lesbarkeit und Wiederverwendbarkeit des Codes, da Funktionen modular und flexibel kombiniert werden können, um komplexe Aufgaben zu erfüllen. Dies ist ein Beispiel für die Anwendung der Kompetenz "Funktionen höherer Ordnung" in meinem BuxPay-Projekt.

@@ -1,39 +1,46 @@
 # Lernfeld B1F
 
 ## Kompetenz
-Ich kann Algorithmen in funktionale Teilstücke aufteilen
+Ich kann Algorithmen in funktionale Teilstücke aufteilen.
 
+## Aufteilen von Algorithmen in Funktionale Teilstücke in BuxPay
 
-## Implementation
+In meinem BuxPay-Code habe ich Algorithmen in verschiedene funktionale Teilstücke aufgeteilt, um den Code modularer, verständlicher und wartbarer zu gestalten. Hier ist ein Beispiel, wie ich diese Kompetenz in meinem Code umgesetzt habe:
 
-Die Zerlegung von Algorithmen in funktionale Komponenten ist eine grundlegende Fähigkeit in der Programmierung, die es ermöglicht, den Code modularer, verständlicher und wartbarer zu gestalten. In Python beinhaltet dieser Prozess die Identifizierung verschiedener Abschnitte des Algorithmus, die separate Aufgaben erfüllen, und die anschließende Implementierung dieser Aufgaben als Funktionen.
-
-Eine Funktion in Python wird mit dem Schlüsselwort def definiert, gefolgt von einem Funktionsnamen, Klammern, die Parameter enthalten können, und einem Doppelpunkt. Der Körper der Funktion enthält den Code, der eine Aufgabe ausführt. Durch die Kapselung spezifischer Funktionalitäten in Funktionen kann jeder Teil des Algorithmus unabhängig getestet und debuggt werden, was eine sauberere und effizientere Codeentwicklung fördert.
-
-## Code Beispiel
 ```python
-def find_min(numbers):
-    min_number = numbers[0]
-    for number in numbers:
-        if number < min_number:
-            min_number = number
-    return min_number
+# Vor der Aufteilung
+def create_invoice(client):
+    user_cookie = random.choice(client.cookies)
+    response = app.buxpay_app.create_gamepass(500, user_cookie)
 
-def find_max(numbers):
-    max_number = numbers[0]
-    for number in numbers:
-        if number > max_number:
-            max_number = number
-    return max_number
+    if not isinstance(response, requests.Response) or response.status_code != 200:
+        return None
 
-def find_min_max(numbers):
-    min_number = find_min(numbers)
-    max_number = find_max(numbers)
-    return min_number, max_number
+    try:
+        gamepass_id = response.json()["gamePassId"]
+        now = datetime.now()
+        return Invoice(uid, 500, "unpaid", gamepass_id, now)
+    except (json.JSONDecodeError, KeyError):
+        return None
 
-numbers = [4, 2, 8, 6]
-result = find_min_max(numbers)
+# Nach der Aufteilung
+def create_invoice(client):
+    user_cookie = random.choice(client.cookies)
+    response = app.buxpay_app.create_gamepass(500, user_cookie)
+
+    if not is_successful_response(response):
+        return None
+
+    gamepass_id = get_gamepass_id(response)
+    invoice = build_invoice(gamepass_id)
+    
+    return invoice
 ```
-In meinem BuxPay-Code werden Funktionen verwendet, um den Code in wiederverwendbare und übersichtliche Einheiten aufzuteilen. Dies ermöglicht eine bessere Strukturierung und Wartbarkeit des Codes. Zum Beispiel dienen die in der Klasse BuxPayApp definierten Methoden dazu, Daten zu laden, zu speichern und Bereinigungsaufgaben durchzuführen. Die verschiedenen Flask-Endpunkte sind ebenfalls Funktionen, die spezifische Aufgaben wie das Erstellen von Zahlungsinformationen oder das Bereitstellen von Webseiten übernehmen.
 
+In diesem Beispiel habe ich den ursprünglichen Algorithmus zur Erstellung einer Rechnung in mehrere funktionale Teilstücke aufgeteilt:
 
+1. `is_successful_response(response)`: Diese Funktion überprüft, ob die Antwort erfolgreich ist.
+2. `get_gamepass_id(response)`: Diese Funktion extrahiert die GamePass-ID aus der Antwort.
+3. `build_invoice(gamepass_id)`: Diese Funktion erstellt eine Rechnung basierend auf der GamePass-ID.
+
+Durch diese Aufteilung konnte ich den Algorithmus in gut verständliche und wiederverwendbare Teile zerlegen. Dies erleichtert die Wartung und das Verständnis des Codes erheblich. Jedes Teilstück erfüllt eine bestimmte Aufgabe und kann unabhängig getestet werden, was die Codeentwicklung insgesamt effizienter macht.

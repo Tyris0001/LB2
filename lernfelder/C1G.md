@@ -29,29 +29,21 @@ Beispiel coding conventions python:
 ```python
 
 # Variablen
-my_variable = 1
-my_long_variable = 2
-my_long_variable_name = 3
+invoices = 1
+current_time = 2
+client_data = []
 
 # Funktionen
-def my_function():
-    pass
-
-def my_long_function():
-    pass
-
-def my_long_function_name():
+def cleanup_paid_transactions():
     pass
 
 # Klassen
-class MyClass:
-    pass
 
-class MyLongClass:
-    pass
+class Invoice:
+    # ...
 
-class MyLongClassName:
-    pass
+class Client: 
+    # ...
 
 ```
 
@@ -59,27 +51,18 @@ Beispiel falsche coding conventions python:
 ```python
 
 # Variablen
-myVariable = 1
-myLongVariable = 2
-myLongVariableName = 3
+Invoices = 1
+currentTime = 2
+CLIENT_DATA = 3
 
 # Funktionen
-def myFunction():
+def CleanupPaidTransactions():
     pass
 
-def myLongFunction():
-    pass
-
-def myLongFunctionName():
-    pass
 
 # Klassen
-class myClass:
-    pass
-
-class myLongClass:
-    pass
-
-class myLongClassName:
-    pass
+class invoice:
+    # ...
+class _Client:
+    # ...
 ```

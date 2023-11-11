@@ -1,125 +1,86 @@
 # Lernfeld A1E
 
 ## Kompetenz
-Ich kann aufzeigen wie Probleme in den verschiedenen Konzepten (OO, prozedural und funktional) gelöst werden und diese miteinander vergleichen.
+Ich kann aufzeigen, wie Probleme in den verschiedenen Programmierkonzepten (Objektorientierte Programmierung - OO, prozedurale Programmierung und funktionale Programmierung) gelöst werden und diese miteinander vergleichen.
 
-# Wege zur Lösung von Problemen mit Code erforschen
-Bei der Programmierung gibt es drei Hauptansätze zur Problemlösung: Objektorientiert (OO), prozedural und funktional.
+## Objektorientierte Programmierung (OO)
 
-### Objektorientiert (OO)
-Bei OO werden Probleme durch die Erstellung von Objekten gelöst. Diese Objekte enthalten Daten und haben Aktionen, die sie ausführen können. Es ist ein strukturierter Ansatz, bei dem verschiedene Objekte miteinander interagieren, um eine Lösung zu erreichen.
+In meinem BuxPay-Code gibt es mehrere Beispiele für die Anwendung von objektorientierter Programmierung (OO) zur Lösung von Problemen:
 
-#### Code
-Example public properties
+**Client- und Invoice-Klassen:**
 ```python
 class Client:
-    def __init__(self, username, api_key, robux_earned, robux_balance, expires, plan, invoices, cookies):
-        self.username = username
-        self.api_key = api_key
-        self.robux_earned = robux_earned
-        self.robux_balance = robux_balance
-        self.expires = expires
-        self.plan = plan
-        self.invoices = invoices
-        self.cookies = cookies
+    # ...
 
-    def get_invoices(self): 
-        return self.invoices
-
-"""
-Since all of our class properties do not begin with ._ or .__ they are publicly accessible!
-Any piece of code that instances the "Client" object is able to access all of it's properties simply by doing the following:
-"""
-new_client = Client()
-# now we get a random property
-print(new_client.username)
+class Invoice:
+    # ...
 ```
-Example private properties
+
+Die Klassen `Client` und `Invoice` sind Beispiele für die Verwendung von OO, um Daten und Verhalten zu kapseln und zu organisieren. Diese Klassen repräsentieren Entitäten in meinem BuxPay-System.
+
+**Methoden in der BuxPayApp-Klasse:**
 ```python
-class Client:
-    def __init__(self, username, api_key, robux_earned, robux_balance, expires, plan, invoices, cookies):
-        self._username = username
-        self._api_key = api_key
-        self._robux_earned = robux_earned
-        self._robux_balance = robux_balance
-        self._expires = expires
-        self._plan = plan
-        self._invoices = invoices
-        self._cookies = cookies
+class BuxPayApp:
+    # ...
 
-# so now if we wanted to access one of the properties, we wouldn't be able to do it by conventional means:
+    def load_clients(self):
+        # ...
 
-new_client = Client()
-
-print(new_client.username) # this piece of code would result in an error
+    def save_clients(self):
+        # ...
 ```
-So how the F*** would we access these protected properties??<br>
-Well the answer is quite simple actually (*It isn't, this is python dummy nothing is simple*)
-#### Method 1:
-We use a regular getter
+
+In der `BuxPayApp`-Klasse werden verschiedene Methoden verwendet, um Aufgaben im Zusammenhang mit den Clients und Rechnungen auszuführen. Diese Methoden sind Teil der OO-Struktur des Codes.
+
+## Prozedurale Programmierung
+
+Die prozedurale Programmierung ist ebenfalls in meinem BuxPay-Code präsent. Hier ist ein Beispiel:
+
+**Prozedurales Beispiel:**
 ```python
-class Client:
-    def __init__(self, username, api_key, robux_earned, robux_balance, expires, plan, invoices, cookies):
-        self._username = username
-        self._api_key = api_key
-        self._robux_earned = robux_earned
-        self._robux_balance = robux_balance
-        self._expires = expires
-        self._plan = plan
-        self._invoices = invoices
-        self._cookies = cookies
+@buxpay_blueprint.route('/procedural-example', methods=['GET'])
+def procedural_example():
+    result = 0
+    for num in range(1, 11):
+        result += num
 
-    def get_username(self):
-        return self._username
+    return jsonify({"result": result})
 ```
-#### Method 2:
-You will use this method if you are one of the following:
-- a smartass
-- working at a company that has a strict coding convention
-```python
-class Client:
-    def __init__(self, username, api_key, robux_earned, robux_balance, expires, plan, invoices, cookies):
-        self._username = username
-        self._api_key = api_key
-        self._robux_earned = robux_earned
-        self._robux_balance = robux_balance
-        self._expires = expires
-        self._plan = plan
-        self._invoices = invoices
-        self._cookies = cookies
 
-    @property
-    def username(self):
-        return self._username
+Dieses Beispiel zeigt einen prozeduralen Algorithmus, der die Summe von Zahlen von 1 bis 10 berechnet. In diesem Fall werden Schritte nacheinander ausgeführt, um das gewünschte Ergebnis zu erzielen.
 
-# fun thing is, now if you want to call this property, you can do so as if it was a public one
-new_client = Client()
-print(new_client.username)
-# HOW COOL IS THAT!!!!
-```
-### Prozedural
-Bei diesem Ansatz wird eine Liste von Anweisungen geschrieben, die der Computer in einer bestimmten Reihenfolge befolgen soll. Jede Anweisung wird Schritt für Schritt ausgeführt, um das anstehende Problem zu lösen.
+## Funktionale Programmierung
 
 ```python
-# to be honest I don't really get this part :P, nor do I think I've done this in my code
-def add(a, b):
-    return a+b
 
-print(add(1, 2))
+@buxpay_blueprint.route('/payments/create', methods=['POST'])
+def payments_create():
+    uid = str(uuid.uuid4()).split("-")[0]
+
+    def create_invoice(client):
+        user_cookie = random.choice(client.cookies)
+        response = app.buxpay_app.create_gamepass(500, user_cookie)
+
+        if not isinstance(response, requests.Response) or response.status_code != 200:
+            return None
+
+        try:
+            gamepass_id = response.json()["gamePassId"]
+            now = datetime.now()
+            return Invoice(uid, 500, "unpaid", gamepass_id, now)
+        except (json.JSONDecodeError, KeyError):
+            return None
+
+    invoices = filter(None, map(create_invoice, app.buxpay_app.clients))
+    invoices = list(invoices)
+
+    for invoice in invoices:
+        for client in app.buxpay_app.clients:
+            if invoice:
+                client.add_invoice(invoice)
+
+    app.buxpay_app.save_invoices()
+
+    return jsonify({"ok": True, "data": {"uid": str(uid), "price": 500, "status": "unpaid"}}), 200
+
 ```
-### Funktional
-Bei der funktionalen Programmierung werden Probleme durch die Erstellung von Funktionen gelöst. Jede Funktion nimmt Daten auf, verarbeitet sie und gibt ein Ergebnis zurück, ohne etwas außerhalb der Funktion zu verändern.
-Jeder dieser Ansätze hat seine eigenen Regeln und Wege, den Code zu organisieren. Im Flask-Projekt wurden die verschiedenen Paradigmen erforscht, um zu verstehen, wie sie bei der Lösung verschiedener Probleme helfen. Durch diese Erkundung wurde ein tieferes Verständnis für die Herangehensweise an die Problemlösung beim Programmieren erlangt.
-```python
-# I'll use fibonacci sequence as an example because it's the only one that comes to mind right now
-def fibonacci(n):
-    if n == 0:
-        return 0
-    elif n == 1:
-        return 1
-    else:
-        return fibonacci(n-1) + fibonacci(n-2)
-print(fibonacci(10))
-```
-
-

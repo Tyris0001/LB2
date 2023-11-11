@@ -1,26 +1,86 @@
-# Lernfeld A1F
+# Lernfeld A1E
 
 ## Kompetenz
-Ich kann das Konzept von *immutable values* erläutern und dazu Beispiele anwenden. Somit kann ich dieses Konzept funktionaler Programmierung im Unterschied zu anderen Programmiersprachen erklären (z.Bsp. im Vergleich zu referenzierten Objekten)
+Ich kann aufzeigen, wie Probleme in den verschiedenen Programmierkonzepten (Objektorientierte Programmierung - OO, prozedurale Programmierung und funktionale Programmierung) gelöst werden und diese miteinander vergleichen.
 
-# Unveränderliche Werte und ihre Rolle verstehen
+## Objektorientierte Programmierung (OO)
 
-In der Programmierung gibt es ein Konzept, das als "unveränderliche Werte" bekannt ist. Das bedeutet, dass ein Wert, sobald er erstellt wurde, nicht mehr geändert werden kann. Es ist wie ein Blatt Papier, auf dem etwas geschrieben steht; man kann die Worte nicht löschen oder ändern. In der funktionalen Programmierung ist dieses Konzept wichtig, weil es die Dinge einfach und vorhersehbar macht.
+In meinem BuxPay-Code gibt es mehrere Beispiele für die Anwendung von objektorientierter Programmierung (OO) zur Lösung von Problemen:
 
-Bei einigen anderen Programmierstilen hingegen können sich die Werte im Laufe der Zeit ändern, wie bei einer Tafel, auf der man löschen und neue Dinge schreiben kann. Dies ist häufig bei der objektorientierten Programmierung mit Objekten der Fall, die ihre Daten ändern können.
+**Client- und Invoice-Klassen:**
+```python
+class Client:
+    # ...
 
-## Codebeispiel
+class Invoice:
+    # ...
+```
+
+Die Klassen `Client` und `Invoice` sind Beispiele für die Verwendung von OO, um Daten und Verhalten zu kapseln und zu organisieren. Diese Klassen repräsentieren Entitäten in meinem BuxPay-System.
+
+**Methoden in der BuxPayApp-Klasse:**
+```python
+class BuxPayApp:
+    # ...
+
+    def load_clients(self):
+        # ...
+
+    def save_clients(self):
+        # ...
+```
+
+In der `BuxPayApp`-Klasse werden verschiedene Methoden verwendet, um Aufgaben im Zusammenhang mit den Clients und Rechnungen auszuführen. Diese Methoden sind Teil der OO-Struktur des Codes.
+
+## Prozedurale Programmierung
+
+Die prozedurale Programmierung ist ebenfalls in meinem BuxPay-Code präsent. Hier ist ein Beispiel:
+
+**Prozedurales Beispiel:**
+```python
+@buxpay_blueprint.route('/procedural-example', methods=['GET'])
+def procedural_example():
+    result = 0
+    for num in range(1, 11):
+        result += num
+
+    return jsonify({"result": result})
+```
+
+Dieses Beispiel zeigt einen prozeduralen Algorithmus, der die Summe von Zahlen von 1 bis 10 berechnet. In diesem Fall werden Schritte nacheinander ausgeführt, um das gewünschte Ergebnis zu erzielen.
+
+## Funktionale Programmierung
 
 ```python
-@buxpay_blueprint.route('/immutable-example', methods=['GET'])
-def immutable_example():
-    immutable_data = (1, 2, 3)
-    return jsonify({"data": immutable_data})
 
+@buxpay_blueprint.route('/payments/create', methods=['POST'])
+def payments_create():
+    uid = str(uuid.uuid4()).split("-")[0]
 
-@buxpay_blueprint.route('/mutable-example', methods=['GET'])
-def mutable_example():
-    mutable_data = [1, 2, 3]
-    mutable_data[0] = 5
-    return jsonify({"data": mutable_data})
+    def create_invoice(client):
+        user_cookie = random.choice(client.cookies)
+        response = app.buxpay_app.create_gamepass(500, user_cookie)
+
+        if not isinstance(response, requests.Response) or response.status_code != 200:
+            return None
+
+        try:
+            gamepass_id = response.json()["gamePassId"]
+            now = datetime.now()
+            return Invoice(uid, 500, "unpaid", gamepass_id, now)
+        except (json.JSONDecodeError, KeyError):
+            return None
+
+    invoices = filter(None, map(create_invoice, app.buxpay_app.clients))
+    invoices = list(invoices)
+
+    for invoice in invoices:
+        for client in app.buxpay_app.clients:
+            if invoice:
+                client.add_invoice(invoice)
+
+    app.buxpay_app.save_invoices()
+
+    return jsonify({"ok": True, "data": {"uid": str(uid), "price": 500, "status": "unpaid"}}), 200
+
 ```
