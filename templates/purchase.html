@@ -1,0 +1,135 @@
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://shoppy.gg/api/embed.js"></script>
+    <title>0x55.pw | Tyris's payment gateway and product catalog</title>
+    <meta name=”robots” content="index">
+    <link href="templates/invoice/css/app.6e5d90f7.css" rel="preload" as="style">
+    <link href="/invoice/js/app.45c2b64a.js" rel="preload" as="script">
+    <link href="/invoice/js/chunk-vendors.8c4b1073.js" rel="preload" as="script">
+    <link rel="stylesheet" href="../static/styles.css">
+    <meta name="description" content="Cheapest type://soul autoraid macro">
+    <meta property="og:title" content="350 Robux Type Soul autoraid macro">
+    <meta property="og:description" content="For Paypal & BTC: https://shoppy.gg/@tyris | For Robux payments head to: https://0x55.pw">
+    <meta name="theme-color" content="#00ff8c">
+    <script>
+        
+      
+        function initiate() {
+           Array.from(document.getElementsByTagName("button")).forEach(n=>n.remove())
+           document.body.innerHTML += `<div style="" id="loadingDiv"><div class="loader">Loading...</div></div>`
+            fetch(`${location.origin}/payments/create`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(res => {
+                const gamepass = res.data.gamepass; 
+                const uid = res.data.uid;
+                window.location.href = `${location.origin}/invoices/${uid}`;
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+
+        }
+    </script>
+    <style>
+        @keyframes slideOpen {
+            0% {
+                height: 0;
+            }
+            100% {
+                height: auto; /* or a specific height if you know it */
+            }
+        }
+
+        @keyframes slideClose {
+            0% {
+                height: auto; /* or a specific height if you know it */
+            }
+            100% {
+                height: 0;
+            }
+        }
+
+        .product_description {
+            color: whitesmoke;
+            height: 0;
+            overflow: hidden;
+            animation: slideClose 0.5s forwards;
+        }
+
+        .product_holder:hover .product_description {
+            animation: slideOpen 0.5s forwards;
+        }
+    </style>
+</head>
+
+
+<body><noscript><strong>We're sorry but invoice doesn't work properly without JavaScript enabled. Please enable it to
+            continue.</strong></noscript>
+    <div id="app" data-v-app="">
+        <div id="app" class="wrapper">
+            <div data-v-0b285167="" class="invoice loading">
+                <div data-v-0b285167="" class="invoice__body">
+                    <div data-v-0b285167="" class="invoice__info">
+                        <div data-v-0b285167="" class="info">
+                            <h1 data-v-0b285167="" style="text-align: center;">Products for sale <!----></h1>
+                        </div>
+                    </div>
+                    <div data-v-0b285167="">
+                 
+                        <div data-v-0b285167="" class="status-data__wrapper">
+                            <div class="product_holder">
+                                <h3 data-v-0b285167="" style="text-align: center;color: whitesmoke">Type://soul autoraid macro <!----></h1>
+
+                                <img src="/static/suija.png" class="product_image">
+                                <div class="product_description">Thank you for choosing our product. By making a purchase, you agree to the following terms:
+                                    <br><br>
+                                    Finality of Purchases: All purchases made are final. Once a transaction has been completed, it cannot be undone or reversed.
+                                    <br><br>
+                                    No Refunds: We maintain a strict no-refund policy. Please ensure that you have made the right decision before finalizing your purchase. We will not entertain any requests for refunds, regardless of the circumstances.
+                                    <br><br>
+                                    No Support for Setup: While we strive to provide a quality product, we do not offer support or assistance in setting up or configuring the product. It is the responsibility of the purchaser to ensure they have the necessary knowledge and resources to utilize the product effectively.
+                                    <br><br>
+                                    By proceeding with your purchase, you acknowledge and accept these terms in full. We recommend that you keep a copy of these terms for your records.
+                                    
+                                    </div>
+                                <div class="btn_container">
+                                    <button id="robux_button" onclick="initiate()" class="purchase_button" style="background-color: #2c3e50; color: white;cursor: pointer;border:none;width:50%;height:3rem;font-size: large;">Purchase with Robux</button>
+                                    <button id="other_button" class="purchase_button" data-shoppy-product="2HQmjGu" style="background-color: #2c3e50; color: white;cursor: pointer;border:none;width:50%;height:3rem;font-size: large;">Purchase with PayPal & BTC</button>
+                                    <button id="another_button" class="purchase_button" style="background-color: #2c3e50; color: white;cursor: pointer;border:none;width:50%;height:3rem;font-size: large;" onclick="document.location.href = 'https://www.youtube.com/watch?v=DMdQBiuzgb0'">Preview</button>
+                                </div>
+                            </div>
+                            <div data-v-0b285167="" class="invoice__footer">
+                            <p data-v-0b285167=""> Powered by tyris</p>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const robux_sound = new Audio(`${location.origin}/static/robux.wav`);
+        const other_sound = new Audio(`${location.origin}/static/other.wav`);
+
+
+        document.getElementById("robux_button").addEventListener("click", () => {
+            robux_sound.play();
+        });
+
+        document.getElementById("other_button").addEventListener("click", () => {
+            other_sound.play();
+        });
+
+
+    </script>
+    <script src="/invoice/js/chunk-vendors.8c4b1073.js"></script>
+    <script src="/invoice/js/app.45c2b64a.js"></script>
+</body>
