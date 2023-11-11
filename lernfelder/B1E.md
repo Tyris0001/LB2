@@ -9,26 +9,20 @@ In Python ist eine Funktion ein Codeblock, der eine bestimmte Aufgabe erfüllt. 
 
 ### Codebeispiel
 ```python
-def find_min(numbers):
-    min_number = numbers[0]
-    for number in numbers:
-        if number < min_number:
-            min_number = number
-    return min_number
+class BuxPayApp:
+    def __init__(self):
+        self.clients = []
+        self.load_clients()
+        self.load_invoices()
+        threading.Thread(target=self.cleanup_paid_transactions).start()
 
-def find_max(numbers):
-    max_number = numbers[0]
-    for number in numbers:
-        if number > max_number:
-            max_number = number
-    return max_number
-
-def find_min_max(numbers):
-    min_number = find_min(numbers)
-    max_number = find_max(numbers)
-    return min_number, max_number
-
-# Now use the function
-numbers = [4, 2, 8, 6]
-result = find_min_max(numbers)
+    def load_json(self, filepath):
+        """
+        Load json file
+        :param filepath:
+        :return:
+        """
+        with open(filepath, "r") as file:
+            return json.load(file)
 ```
+Beispiel: `load_json`

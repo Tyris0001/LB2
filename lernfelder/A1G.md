@@ -19,12 +19,22 @@ dass reine Funktionen uns bei der Lösung unserer Probleme helfen.
 
 ```python
 import random
-# bester freund:
-def friendly_function(a, b):
-    return a+b 
+# procedural
+@buxpay_blueprint.route('/procedural-example', methods=['GET'])
+def procedural_example():
+    result = 0
+    for num in range(1, 11):
+        result += num
 
-# a-hole:
-def unfriendly_function(a, b):
-    return a+b+random.randint(0, 100)
+    return jsonify({"result": result})
+
+# functional
+@buxpay_blueprint.route('/functional-example', methods=['GET'])
+def functional_example():
+    # Functional programming example: Calculate the sum of numbers from 1 to 10
+    numbers = list(range(1, 11))
+    sum_of_numbers = sum(numbers)
+
+    return jsonify({"result": sum_of_numbers})
 ```
 

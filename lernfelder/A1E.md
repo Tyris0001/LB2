@@ -10,31 +10,98 @@ Bei der Programmierung gibt es drei Hauptansätze zur Problemlösung: Objektorie
 Bei OO werden Probleme durch die Erstellung von Objekten gelöst. Diese Objekte enthalten Daten und haben Aktionen, die sie ausführen können. Es ist ein strukturierter Ansatz, bei dem verschiedene Objekte miteinander interagieren, um eine Lösung zu erreichen.
 
 #### Code
+Example public properties
 ```python
-class Object:
-    def __init__(self, a, b):
-        self.data = a
-        self.__private_var = b
-        
-    @property # this is one way to make a getter, you can also just do it without annotations
-    def private_var(self):
-        return self.__private_var
+class Client:
+    def __init__(self, username, api_key, robux_earned, robux_balance, expires, plan, invoices, cookies):
+        self.username = username
+        self.api_key = api_key
+        self.robux_earned = robux_earned
+        self.robux_balance = robux_balance
+        self.expires = expires
+        self.plan = plan
+        self.invoices = invoices
+        self.cookies = cookies
 
-# we create the object
-obj = Object(1, 2)
+    def get_invoices(self): 
+        return self.invoices
 
-# we can freely access the "data" property
-print(obj.data)
-
-# we cannot freely access the "private_var" property, as it is private. Since we have an annotation and a getter, we are now able to call it like a regular variable.
-print(obj.private_var)
+"""
+Since all of our class properties do not begin with ._ or .__ they are publicly accessible!
+Any piece of code that instances the "Client" object is able to access all of it's properties simply by doing the following:
+"""
+new_client = Client()
+# now we get a random property
+print(new_client.username)
 ```
+Example private properties
+```python
+class Client:
+    def __init__(self, username, api_key, robux_earned, robux_balance, expires, plan, invoices, cookies):
+        self._username = username
+        self._api_key = api_key
+        self._robux_earned = robux_earned
+        self._robux_balance = robux_balance
+        self._expires = expires
+        self._plan = plan
+        self._invoices = invoices
+        self._cookies = cookies
 
+# so now if we wanted to access one of the properties, we wouldn't be able to do it by conventional means:
+
+new_client = Client()
+
+print(new_client.username) # this piece of code would result in an error
+```
+So how the F*** would we access these protected properties??<br>
+Well the answer is quite simple actually (*It isn't, this is python dummy nothing is simple*)
+#### Method 1:
+We use a regular getter
+```python
+class Client:
+    def __init__(self, username, api_key, robux_earned, robux_balance, expires, plan, invoices, cookies):
+        self._username = username
+        self._api_key = api_key
+        self._robux_earned = robux_earned
+        self._robux_balance = robux_balance
+        self._expires = expires
+        self._plan = plan
+        self._invoices = invoices
+        self._cookies = cookies
+
+    def get_username(self):
+        return self._username
+```
+#### Method 2:
+You will use this method if you are one of the following:
+- a smartass
+- working at a company that has a strict coding convention
+```python
+class Client:
+    def __init__(self, username, api_key, robux_earned, robux_balance, expires, plan, invoices, cookies):
+        self._username = username
+        self._api_key = api_key
+        self._robux_earned = robux_earned
+        self._robux_balance = robux_balance
+        self._expires = expires
+        self._plan = plan
+        self._invoices = invoices
+        self._cookies = cookies
+
+    @property
+    def username(self):
+        return self._username
+
+# fun thing is, now if you want to call this property, you can do so as if it was a public one
+new_client = Client()
+print(new_client.username)
+# HOW COOL IS THAT!!!!
+```
 ### Prozedural
 Bei diesem Ansatz wird eine Liste von Anweisungen geschrieben, die der Computer in einer bestimmten Reihenfolge befolgen soll. Jede Anweisung wird Schritt für Schritt ausgeführt, um das anstehende Problem zu lösen.
 
 ```python
-# to be honest I don't really get this part :P
+# to be honest I don't really get this part :P, nor do I think I've done this in my code
 def add(a, b):
     return a+b
 

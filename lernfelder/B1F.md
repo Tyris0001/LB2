@@ -34,4 +34,6 @@ def find_min_max(numbers):
 numbers = [4, 2, 8, 6]
 result = find_min_max(numbers)
 ```
+In meinem BuxPay-Code werden Funktionen verwendet, um den Code in wiederverwendbare und übersichtliche Einheiten aufzuteilen. Dies ermöglicht eine bessere Strukturierung und Wartbarkeit des Codes. Zum Beispiel dienen die in der Klasse BuxPayApp definierten Methoden dazu, Daten zu laden, zu speichern und Bereinigungsaufgaben durchzuführen. Die verschiedenen Flask-Endpunkte sind ebenfalls Funktionen, die spezifische Aufgaben wie das Erstellen von Zahlungsinformationen oder das Bereitstellen von Webseiten übernehmen.
+
 

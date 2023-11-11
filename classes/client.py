@@ -13,7 +13,7 @@ class Client:
         self.invoices = invoices
         self.cookies = cookies
 
-    @classmethod
+    @classmethod # I LOVE FIRESHIP.IO!! 😢
     def from_json(cls, data):
         return cls(
             data.get("username"),

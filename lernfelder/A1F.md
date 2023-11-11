@@ -12,15 +12,15 @@ Bei einigen anderen Programmierstilen hingegen können sich die Werte im Laufe d
 ## Codebeispiel
 
 ```python
-# immutable
-a = 1
-b = 2
-c = a + b
-print(c)
+@buxpay_blueprint.route('/immutable-example', methods=['GET'])
+def immutable_example():
+    immutable_data = (1, 2, 3)
+    return jsonify({"data": immutable_data})
 
-# mutable
-a = [1, 2, 3]
-b = [4, 5, 6]
-c = a + b
-print(c)
+
+@buxpay_blueprint.route('/mutable-example', methods=['GET'])
+def mutable_example():
+    mutable_data = [1, 2, 3]
+    mutable_data[0] = 5
+    return jsonify({"data": mutable_data})
 ```

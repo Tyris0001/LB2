@@ -284,8 +284,39 @@ def reduce_example():
     result = reduce(product, numbers)
     return jsonify({"data": result})
 
+@buxpay_blueprint.route('/filter-example', methods=['GET'])
+def filter_example():
+    numbers = [1, 2, 3, 4, 5]
+    is_even = lambda x: x % 2 == 0
+    even_numbers = list(filter(is_even, numbers))
+    return jsonify({"data": even_numbers})
 
-    app.register_blueprint(buxpay_blueprint, url_prefix='/')
+@buxpay_blueprint.route('/functional-example', methods=['GET'])
+def fibonacci(n):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        return jsonify({"data":fibonacci(n-1) + fibonacci(n-2)})
+
+@buxpay_blueprint.route('/procedural-example', methods=['GET'])
+def procedural_example():
+    result = 0
+    for num in range(1, 11):
+        result += num
+
+    return jsonify({"result": result})
+
+@buxpay_blueprint.route('/functional-example', methods=['GET'])
+def functional_example():
+    numbers = list(range(1, 11))
+    sum_of_numbers = sum(numbers)
+
+    return jsonify({"result": sum_of_numbers})
+
+
+app.register_blueprint(buxpay_blueprint, url_prefix='/')
 
 if __name__ == "__main__":
     app.buxpay_app = BuxPayApp()
