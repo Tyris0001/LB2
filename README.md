@@ -1,6 +1,8 @@
 # Payment Transaction Gateway
-This is my project for the LB2 in M323 at BZZ.
-
+This is my project for the LB2 in M323 at BZZ.<br>
+**IF YOU NEED ASSISTANCE AT RUNNING/SETTING THIS UP PLEASE CONTACT ME ON BZZ TEAMS OR PREFERABLY DISCORD (for fastere response time)**
+<br><br>
+Discord: `_tyris`
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [Requirements](#requirements)
