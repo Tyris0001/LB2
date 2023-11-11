@@ -10,7 +10,7 @@ Discord: `_tyris`
 
 ## Introduction
 This is a payment gateway for [Roblox](https://roblox.com) which takes their in-game currency as a payment method for your executables/software or services.
-I have been meaning to make something like this for a while and figured why not create this for my LB2 so I can also be able to use it for my own project.
+I have been meaning to make something like this for a while and figured why not create this for my LB2 so I can also be able to use it for my own use.
 
 ## Requirements
 - [Python 3.9](https://www.python.org/downloads/)
@@ -28,7 +28,4 @@ beautifulsoup
 ## Explanation
 I wanted to create a service with API keys that I can sell to others so they can use my service to sell their own executables/software or services.
 I have created a simple API key system which is stored in the buxpay > main.json file.
-This code works as I have tested it and made some sales with it.
-![proof](https://media.discordapp.net/attachments/1155259415667154966/1171780609337724948/image.png?ex=655decbb&is=654b77bb&hm=06f5455f923cbbdff8bbad9d6c0ce56a7f830cae8b90a25b0a0f07980df0d04a&=)
-<br>
-7000 Robux is around 50$ USD.
+I have this code deployed on a website, used vultr and I've made around 7000 Robux is around 50$ USD.
